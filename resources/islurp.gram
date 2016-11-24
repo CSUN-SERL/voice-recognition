@@ -1,0 +1,38 @@
+#JSGF V2.2;
+
+grammar islurp;
+
+public <start> = (start | <statement> | end );
+<statement> = <vehicle> | <non-vehicle>;
+<digit> = ( zero | one | two | three | four | five | six | seven | eight | nine );
+
+
+<vehicle> = ( <UAV><VC> | <GROUP><VCG> |<HUSKY> (<VC4>) );
+<GROUP> = (group);
+<UAV> = (( drone ) <digit> [<digit>] )*;
+<HUSKY> = ((Husky) <digit> [<digit>] )*;
+
+<VC> = <VC1> | <VC2> | <VC3> | <VC4> | <VC5>;
+<VCG> = <VC1> | <VC2> | <VC3> | <VC4>;
+
+<VC1> = ( /5/arm | /1/disarm | /9/get flight state);
+<VC2> = (set flight mode <fmode> | set altitude );
+<VC3> = (scout building <digit>[<digit>] | stop mission | pause mission | resume mission);
+<VC4> = (set way point <latlng>);
+<VC5> = (set group | delete group);
+
+<fmode> = ( Stabilize | Loiter | Land | Altitude Hold | Position Hold | Return to Launch | Auto | Off board );
+<latlng> = ((<digit><digit><digit><digit><digit>)(and)(<digit><digit><digit><digit><digit>)) | 
+	   ((<digit><digit><digit>(point | dot)<digit><digit><digit>)(and)(<digit><digit><digit>(point | dot)<digit><digit><digit>));
+
+
+
+<non-vehicle> = <NVC1> | <NVC2> | <NVC3>;
+
+<NVC1> = (execute play <digit>) | (stop play ) | (resume play ) | (pause play );
+<NVC2> = (accept query <digit> | reject query <digit> | accept all queries | reject all queries);
+<NVC3> = (delete access point <digit>);
+
+
+
+

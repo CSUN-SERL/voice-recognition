@@ -28,18 +28,20 @@
 #include <voce/voce.h>
 #include "myVoce/CommandParser.h"
 #include <unistd.h>
-
+#include <ros/package.h>
 
 /// A sample application showing how to use Voce's speech synthesis 
 /// capabilities.
 
 int main(int argc, char **argv)
 {
-    voce::init("/opt/voce/lib", false, true, "/opt/voce/gram", "digits");
+    std::string path = ros::package::getPath("voice_recognition");
+    path.append("/resources");
+    std::cout << path << std::endl;
+    
+    voce::init("/opt/voce/lib", false, true, path, "islurp");
 
-    std::cout << "This is a speech recognition test. " 
-        << "Speak digits from 0-9 into the microphone. " 
-        << "Speak 'quit' to quit." << std::endl;
+    std::cout << "Voice initialize" << std::endl;
 
     bool quit = false;
     bool started = false;
