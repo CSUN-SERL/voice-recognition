@@ -1,0 +1,21 @@
+
+<package>
+
+    <name>voice_recognition</name>
+    <version>0.0.0</version>
+    <description>
+        bare bones ros package with a QMainWindow that does not rely on rqt.
+    </description>
+    <maintainer email="net2net4all@gmail.com">VR Team</maintainer>
+    <license>BSD</license>
+
+    <url>http://ros.org/wiki/foo_core</url>
+    <author>VR Team</author>
+
+    <buildtool_depend>catkin</buildtool_depend>
+
+    <build_depend>roscpp</build_depend>
+
+    <run_depend>roscpp</run_depend>
+
+</package>
