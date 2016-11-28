@@ -16,7 +16,7 @@ public:
     
     CommandParser();
     ~CommandParser();
-    void parse(std::string command);
+    void parse(std::string& command);
     
  private:
         std::string (CommandParser::*CMDPtr)();    
@@ -32,7 +32,8 @@ public:
         
 
 	int arg1;
-        int arg2;
+      int arg2;
+        
 	bool checkVehicle;
 	bool isInteger;
 	bool vehicleCheck;

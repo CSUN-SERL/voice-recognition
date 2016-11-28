@@ -37,42 +37,57 @@ CommandParser::CommandParser()
      
 }
 
+
+        
 CommandParser::~CommandParser(){}
 
-void CommandParser::parse(std::string command)
+void CommandParser::parse(std::string& command)
 {
     convertCmd(command);
-   
+    
+
     vehicleCheck = false;
     numCount =false;
     arg1, arg2 = 0;
+
     for (int i = 0; i < commandChain.size();i++)
     {
+
         if (commandChain[i].compare("DRONE") == 0){
+
             vehicleName = "DRONE";
             vehicleCheck = true;
             vehicleNum.push_back((commandChain[i + 1]));
             i++;
         }
         else if (commandChain[i].compare("HUSKY") == 0) {
+
             vehicleName = "HUSKY";
             vehicleCheck = true;
             vehicleNum.push_back((commandChain[i + 1]));
             i++;
 
-        }else{
+        }
+        else
+        {
+
             int j = 0;
             for (j = i;j < commandChain.size();j++)
             {
+
                 if (checkForDigit(commandChain[j]) == false)
                 {
+                    vehicleCheck = true;
+
                     if (commandChain[j]!="AND"  && commandChain[j]!="DOT" && commandChain[j]!="POINT" )
                     {
                         partialcmd += commandChain[j] + " ";
+
                         
                     }
                     else if (commandChain[j-1].compare("WAY") == 0)
                     {
+
                         partialcmd +=  commandChain[j] + " ";
 
                     }
@@ -82,9 +97,11 @@ void CommandParser::parse(std::string command)
                 //a vehicle is already called or command called so digits are not the vehicle number and are digits for the command
                 else if (vehicleCheck == true)
                 {
+
                     // if its a number and the first number given
                     if (checkForDigit(commandChain[j]) == true && numCount == false)
                     {
+
                         numCount = true;
                         arg1 = boost::lexical_cast<int>(commandChain[j]);
                     }
@@ -96,15 +113,18 @@ void CommandParser::parse(std::string command)
 
             }
             i = j;
-        }
+        } //else
 
-    }
+    } //for (int i = 0; i < commandChain.size();i++)
+
    
 
 //    update();
     boost::algorithm::trim(partialcmd);
     if (!vehicleNum.empty())
     {
+        
+
         std::cout << std::string("FOR ") << vehicleName << std::string(" VEHICLES: ") << std::endl;
         for (int i = 0; i < vehicleNum.size();i++)
         {
@@ -121,11 +141,12 @@ void CommandParser::parse(std::string command)
     }
     else
     {
+        CMDPtr = CMD[partialcmd];
+
         std::cout << std::string("FOR CURRENT VEHICLE: ") << std::endl;
         
       
         std::cout << std::string("Command: ") << (this->*CMDPtr)()  << std::endl;
-        
 
     }
 }
@@ -333,7 +354,7 @@ std::string CommandParser::deleteAccessPoint()
 std::string CommandParser::setWayPoint()
 {
 // TODO Auto-generated method stub
-    
+
     std::string txt = "[SET WAY POINT FOR LAT: " + boost::lexical_cast<std::string>(arg1) + " AND LNG: " + boost::lexical_cast<std::string>(arg2) + " ]";
     return txt;
 }
@@ -341,6 +362,7 @@ std::string CommandParser::setWayPoint()
 std::string CommandParser::scoutBuilding()
 {
 // TODO Auto-generated method stub
+
 	std::string txt = "[SCOUT BUILDING FOR " + boost::lexical_cast<std::string>(arg1) + " ]";
     return txt;
 }

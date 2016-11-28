@@ -48,6 +48,7 @@ int main(int argc, char **argv)
     
     CommandParser p;
     
+    
     while (!quit)
     {
         // Normally, applications would do application-specific things 
