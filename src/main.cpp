@@ -68,7 +68,7 @@ int main(int argc, char **argv)
                 break;
             }
           
-            if (s == "end")
+            if (s == "end voice")
             {
                 started = false;
                 std::cout << "Voice Recognition stopped!"<< std::endl;

@@ -117,6 +117,7 @@ void CommandParser::parse(std::string command)
             
 
         }
+        vehicleNum.clear();
     }
     else
     {
