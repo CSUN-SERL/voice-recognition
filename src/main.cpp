@@ -46,7 +46,7 @@ int main(int argc, char **argv)
     bool quit = false;
     bool started = false;
     
-    CommandParser p;
+    
     
     
     while (!quit)
@@ -76,7 +76,7 @@ int main(int argc, char **argv)
                 break;
                 
             }
-            else if (s == "start")
+            else if (s == "start voice")
             {
                 std::cout << "Voice Recognition started!"<< std::endl;
                 started = true;
@@ -85,11 +85,13 @@ int main(int argc, char **argv)
             {
                 
                 
-                
+                 boost::to_upper(s);
+
                  std::cout << "TEST: " << s << std::endl;
 
-                 
+                 CommandParser p;
                  p.parse(s);
+                 
 
                 std::cout << "You said ----------: " << s << std::endl;
             } 

@@ -44,6 +44,7 @@ CommandParser::~CommandParser(){}
 void CommandParser::parse(std::string& command)
 {
     convertCmd(command);
+//    boost::to_upper(command);
     
 
     vehicleCheck = false;
@@ -79,7 +80,7 @@ void CommandParser::parse(std::string& command)
                 {
                     vehicleCheck = true;
 
-                    if (commandChain[j]!="AND"  && commandChain[j]!="DOT" && commandChain[j]!="POINT" )
+                    if (commandChain[j]!="BY"  && commandChain[j]!="DOT" && commandChain[j]!="POINT" )
                     {
                         partialcmd += commandChain[j] + " ";
 
