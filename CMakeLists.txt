@@ -7,6 +7,7 @@ find_package(Qt5Widgets REQUIRED)
 find_package(catkin REQUIRED COMPONENTS
                         roscpp
                         roslib
+                        gcs
 )
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
@@ -26,7 +27,7 @@ include_directories(${voice_recognition_INCLUDE_DIRECTORIES}
 catkin_package(
     INCLUDE_DIRS include
     LIBRARIES ${PROJECT_NAME}
-    CATKIN_DEPENDS roscpp
+    CATKIN_DEPENDS roscpp roslib gcs
     DEPENDS Qt5Widgets )
 
 file(GLOB voice_recognition_SRCS src/myVoce/*.cpp src/qt/*.cpp)
@@ -50,6 +51,8 @@ add_library(_voice_recognition
             ${voice_recognition_VFS} )
 
 add_executable(${PROJECT_NAME} src/main.cpp)
+
+add_dependencies(${PROJECT_NAME} ${catkin_EXPORTED_TARGETS})
 
 target_link_libraries(${PROJECT_NAME}
                         _voice_recognition
