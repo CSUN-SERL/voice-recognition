@@ -5,6 +5,7 @@
 #include <unistd.h>
 #include <iostream>
 #include <string>
+#include <qt/ui_adapter.h>
 
 #define ever ;;
 
@@ -234,11 +235,14 @@ void CommandParser::initialize()
 std::string CommandParser::arm()
 {
     std::string txt = "[ARM]";
+    emit gcs::UIAdapter::Instance()->Arm(1,true);
     return txt;
 }
 std::string CommandParser::disarm()
 {
     std::string txt = "[DISARM]";
+    emit gcs::UIAdapter::Instance()->Arm(1,false);
+
     return txt;
 }std::string CommandParser::getFlightState()
 {
@@ -357,6 +361,8 @@ std::string CommandParser::setWayPoint()
 // TODO Auto-generated method stub
 
     std::string txt = "[SET WAY POINT FOR LAT: " + boost::lexical_cast<std::string>(arg1) + " AND LNG: " + boost::lexical_cast<std::string>(arg2) + " ]";
+    emit gcs::UIAdapter::Instance()->SetWayPoint(1,123,123,0);
+
     return txt;
 }
 

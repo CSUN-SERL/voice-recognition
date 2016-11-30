@@ -4,10 +4,17 @@ cmake_minimum_required(VERSION 2.8.12)
 project(voice_recognition)
 
 find_package(Qt5Widgets REQUIRED)
+find_package(Qt5Svg REQUIRED)
+find_package(Qt5WebKitWidgets REQUIRED)
+find_package(OpenCV REQUIRED)
 find_package(catkin REQUIRED COMPONENTS
                         roscpp
                         roslib
                         gcs
+                        eigen_conversions
+                        image_transport
+                        cv_bridge
+                        lcar_msgs
 )
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
@@ -16,19 +23,22 @@ set(voice_recognition_INCLUDE_DIRECTORIES
         src
         include
         resources
+        nodes
 	/usr/lib/jvm/java-8-openjdk-amd64/include
 	/usr/lib/jvm/java-8-openjdk-amd64/include/linux
 )
 
 include_directories(${voice_recognition_INCLUDE_DIRECTORIES}
                     ${Qt5Widgets_INCLUDE_DIRS}
+                    ${Qt5Svg_INCLUDE_DIRS}
+                    ${Qt5WebKitWidgets_INCLUDE_DIRS} 
                     ${catkin_INCLUDE_DIRS} )
 
 catkin_package(
     INCLUDE_DIRS include
     LIBRARIES ${PROJECT_NAME}
-    CATKIN_DEPENDS roscpp roslib gcs
-    DEPENDS Qt5Widgets )
+    CATKIN_DEPENDS roscpp roslib gcs image_transport eigen_conversions lcar_msgs
+     )
 
 file(GLOB voice_recognition_SRCS src/myVoce/*.cpp src/qt/*.cpp)
 #list(REMOVE_ITEM voice_recognition_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp )
@@ -40,25 +50,42 @@ qt5_add_resources(voice_recognition_VFS ${voice_recognition_QRSCS}) #VFS = Virtu
 qt5_wrap_cpp(voice_recognition_MOCS ${voice_recognition_HDRS}) #makes meta objects compile file
 qt5_wrap_ui(voice_recognition_UI_HDRS ${voice_recognition_UIS} )
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -fPIC")
 add_definitions(${Qt5Widgets_DEFINITIONS}
                 ${catkin_DEFINITIONS} )
 
-add_library(_voice_recognition
+add_library(${PROJECT_NAME}
             ${voice_recognition_SRCS}
             ${voice_recognition_MOCS}
             ${voice_recognition_UI_HDRS}
             ${voice_recognition_VFS} )
 
-add_executable(${PROJECT_NAME} src/main.cpp)
+#add_executable(main src/main.cpp)
+add_executable(test_node nodes/uav_node.cpp )
 
-add_dependencies(${PROJECT_NAME} ${catkin_EXPORTED_TARGETS})
 
-target_link_libraries(${PROJECT_NAME}
-                        _voice_recognition
-                        Qt5::Widgets
-                        ${catkin_LIBRARIES}
+#add_dependencies(main ${catkin_EXPORTED_TARGETS})
+add_dependencies(test_node ${catkin_EXPORTED_TARGETS})
 
-/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/amd64/server/libjvm.so
+#target_link_libraries(main
+#                        ${PROJECT_NAME}
+#                        Qt5::Widgets
+#                        ${catkin_LIBRARIES} 
+#/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/amd64/server/libjvm.so ) 
 
- )
+
+target_link_libraries(test_node
+             ${PROJECT_NAME}
+             ${catkin_LIBRARIES}
+             Qt5::Widgets
+             Qt5::Svg
+             Qt5::WebKitWidgets
+             ${OpenCV_LIBRARIES}
+/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/amd64/server/libjvm.so  
+#/home/borhan/Desktop/lcar-bot/devel/lib/libgcs.so
+)
+
+
+
+ 
+#DEPENDS Qt5Widgets
