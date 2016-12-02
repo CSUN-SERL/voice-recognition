@@ -4,10 +4,10 @@
  * and open the template in the editor.
  */
 
-/* 
+/*
  * File:   VoiceRecognition.cpp
  * Author: borhan
- * 
+ *
  * Created on November 29, 2016, 8:16 PM
  */
 
@@ -21,39 +21,39 @@
 
 VoiceRecognition::VoiceRecognition() {
 
- 
+
 //    timer = new QTimer(this);
 //    connect(timer, &QTimer::timeout, this, &VoiceRecognition::run);
 //    timer->start(40);
-    
+
 }
 
 
 VoiceRecognition::~VoiceRecognition() {
-    voce::destroy(); 
+    voce::destroy();
 }
 
 void VoiceRecognition::run()
 {
-      std::string path = ros::package::getPath("voice_recognition");
+    std::string path = ros::package::getPath("voice_recognition");
     path.append("/resources");
     std::cout << path << std::endl;
-    
+
     voce::init("/opt/voce/lib", false, true, path, "islurp");
 
     std::cout << "Voice initialize" << std::endl;
-    
-    
+
+
     std::cout << "running" << std::endl;
     while (!quit)
     {
-        // Normally, applications would do application-specific things 
+        // Normally, applications would do application-specific things
         // here.  For this sample, we'll just sleep for a little bit.
 
         while (voce::getRecognizerQueueSize() > 0)
         {
-            std::string s = voce::popRecognizedString(); 
-                        
+            std::string s = voce::popRecognizedString();
+
             // Check if the string contains 'quit'.
             if (std::string::npos != s.rfind("quit"))
             {
@@ -61,7 +61,6 @@ void VoiceRecognition::run()
                 this->thread()->requestInterruption();
                 return;
             }
-          
             if (s == "end voice")
             {
                 started = false;
@@ -81,15 +80,19 @@ void VoiceRecognition::run()
 
                  CommandParser p;
                  p.parse(s);
-                 
+
 
                 std::cout << "You said ----------: " << s << std::endl;
-            } 
+
 
             //voce::synthesize(s);
-                        
-        }//while (voce::getRecognizerQueueSize() > 0)
-    }//if(!quit)
+
+          } // else if (started)
+
+        }//while (voce::getRecognizerQueueSize() > 0
+
+        // QCoreApplication::processEvents();
+
+      }  //while(!quit)
 
 }
-

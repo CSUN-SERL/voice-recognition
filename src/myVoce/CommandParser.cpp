@@ -15,10 +15,10 @@
 //    // TODO Auto-generated method stub
 //    for(ever)
 //    {
-//        
+//
 //        std::string input;
 //        std::cout << "What is your command?" << std::endl;
-//       
+//
 //
 //        std::getline(std::cin, input);
 //
@@ -28,25 +28,25 @@
 //
 //        cmd.parse(input);
 //    }
-//    
+//
 //    return 0;
 //}
 
 CommandParser::CommandParser()
 {
     this->initialize();
-     
+
 }
 
 
-        
+
 CommandParser::~CommandParser(){}
 
 void CommandParser::parse(std::string& command)
 {
     convertCmd(command);
 //    boost::to_upper(command);
-    
+
 
     vehicleCheck = false;
     numCount =false;
@@ -85,7 +85,7 @@ void CommandParser::parse(std::string& command)
                     {
                         partialcmd += commandChain[j] + " ";
 
-                        
+
                     }
                     else if (commandChain[j-1].compare("WAY") == 0)
                     {
@@ -94,8 +94,8 @@ void CommandParser::parse(std::string& command)
 
                     }
                 }
-                
-                
+
+
                 //a vehicle is already called or command called so digits are not the vehicle number and are digits for the command
                 else if (vehicleCheck == true)
                 {
@@ -119,24 +119,24 @@ void CommandParser::parse(std::string& command)
 
     } //for (int i = 0; i < commandChain.size();i++)
 
-   
+
 
 //    update();
     boost::algorithm::trim(partialcmd);
     if (!vehicleNum.empty())
     {
-        
+
 
         std::cout << std::string("FOR ") << vehicleName << std::string(" VEHICLES: ") << std::endl;
         for (int i = 0; i < vehicleNum.size();i++)
         {
             //if cmd has it
-           
-               
+
+
                 CMDPtr = CMD[partialcmd];
 
-                std::cout << vehicleNum[i] << std::string(" - Command: ") << (this->*CMDPtr)() << std::endl;    
-            
+                std::cout << vehicleNum[i] << std::string(" - Command: ") << (this->*CMDPtr)() << std::endl;
+
 
         }
         vehicleNum.clear();
@@ -146,8 +146,8 @@ void CommandParser::parse(std::string& command)
         CMDPtr = CMD[partialcmd];
 
         std::cout << std::string("FOR CURRENT VEHICLE: ") << std::endl;
-        
-      
+
+
         std::cout << std::string("Command: ") << (this->*CMDPtr)()  << std::endl;
 
     }
@@ -210,8 +210,8 @@ void CommandParser::initialize()
 	CMD["REJECT ALL QUERIES"] = &CommandParser::rejectAllQueries;
 
 	//NVC3
-        
-        
+
+
         //formerly update function
         //VC1
 
@@ -250,6 +250,7 @@ std::string CommandParser::disarm()
     return txt;
 }std::string CommandParser::setFlightModeStabilize()
 {
+
     std::string txt = "[SET FLIGHT MODE STABILIZE]";
     return txt;
 }std::string CommandParser::setFlightModeLoiter()
@@ -337,7 +338,7 @@ std::string CommandParser::rejectQuery()
 std::string CommandParser::acceptQuery()
 {
 // TODO Auto-generated method stub
-    
+
 	std::string txt = "[ACCEPT QUERY FOR " + boost::lexical_cast<std::string>(arg1) + " ]";
 	 return txt;
 }
@@ -361,7 +362,7 @@ std::string CommandParser::setWayPoint()
 // TODO Auto-generated method stub
 
     std::string txt = "[SET WAY POINT FOR LAT: " + boost::lexical_cast<std::string>(arg1) + " AND LNG: " + boost::lexical_cast<std::string>(arg2) + " ]";
-    emit gcs::UIAdapter::Instance()->SetWayPoint(1,123,123,0);
+    emit gcs::UIAdapter::Instance()->SetWayPoint(1,arg1,arg2,0);
 
     return txt;
 }
@@ -388,8 +389,8 @@ bool CommandParser::checkForDigit(const std::string &s)
 
 void CommandParser::convertCmd(const std::string& input)
 {
-    
-    using namespace boost::algorithm;
+
+   using namespace boost::algorithm;
    split(command, input, is_any_of(" "));
 
    for (int i = 0; i < command.size(); i++)
