@@ -87,7 +87,7 @@ void VoiceRecognition::run()
 
             //voce::synthesize(s);
 
-          } // else if (started)
+            } // else if (started)
 
         }//while (voce::getRecognizerQueueSize() > 0
 

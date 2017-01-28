@@ -11,22 +11,26 @@
  * Created on November 29, 2016, 6:46 PM
  */
 
-#include <qt5/QtCore/qtimer.h>
-
-#include "qt/UavAdapter.h"
+#include <qt/UavAdapter.h>
+#include <vehicle/data_types.h>
 
 
 UavAdapter::UavAdapter():
-uav(new gcs::UAVControl(1))
+uav(new gcs::UAVControl(2000)),
+timer(new QTimer(this))
 {
+    uav->SetPositionMode(gcs::PositionMode::local);
+    
     gcs::UIAdapter *ui = gcs::UIAdapter::Instance();
     connect(ui, &gcs::UIAdapter::Arm, this,&UavAdapter::Arm);
     connect(ui, &gcs::UIAdapter::SetWayPoint, this, &UavAdapter::SetWayPoint);
     connect(ui, &gcs::UIAdapter::SetMode, this, &UavAdapter::SetMode);
-
-    timer = new QTimer(this);
+    
     connect(timer, &QTimer::timeout, this, [=](){ uav->Run(); });
     timer->start(0);
+    
+    this->Arm(2000, true);
+    
 }
 
 
@@ -43,11 +47,21 @@ void UavAdapter::run(){
  {
      if(value)
      {
-       //uav->Arm(value);
-       uav->Takeoff(2);
-       //uav->SetWayPoint(0,0,10,0);
-       uav->SetPosition(0,0,10,0);
+//       uav->Takeoff(2);
+//       uav->SetWayPoint(0,0,10,0);
+//       uav->SetPosition(0,0,10,0);
 
+        lcar_msgs::TargetLocal target_pt; 
+        target_pt.target.position.x = 0;
+        target_pt.target.position.y = 0;
+        target_pt.target.position.z = 2;
+
+        target_pt.radius = 2;
+        uav->Arm(value);
+        uav->Takeoff(2);
+        uav->ScoutBuilding(target_pt);
+        
+       
      }
      else
      {

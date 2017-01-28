@@ -17,7 +17,6 @@ int main(int argc, char** argv) {
     QApplication app(argc, argv);
 
     ros::init(argc, argv, "gcs");
-    UavAdapter uav;
     VoiceRecognition vr;
 
     QThread thread;
@@ -27,6 +26,8 @@ int main(int argc, char** argv) {
 
     ros::AsyncSpinner spinner(0);
     spinner.start();
+            
+    UavAdapter uav;
 
     return app.exec();
 }

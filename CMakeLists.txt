@@ -6,11 +6,12 @@ project(voice_recognition)
 find_package(Qt5Widgets REQUIRED)
 find_package(Qt5Svg REQUIRED)
 find_package(Qt5WebKitWidgets REQUIRED)
-find_package(OpenCV REQUIRED)
+#find_package(OpenCV REQUIRED)
 find_package(catkin REQUIRED COMPONENTS
                         roscpp
                         roslib
                         gcs
+                        vehicle
                         eigen_conversions
                         image_transport
                         cv_bridge
@@ -19,7 +20,7 @@ find_package(catkin REQUIRED COMPONENTS
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-set(voice_recognition_INCLUDE_DIRECTORIES
+set(voice_recognition_INCLUDE_DIRS
         src
         include
         resources
@@ -28,7 +29,7 @@ set(voice_recognition_INCLUDE_DIRECTORIES
 	/usr/lib/jvm/java-8-openjdk-amd64/include/linux
 )
 
-include_directories(${voice_recognition_INCLUDE_DIRECTORIES}
+include_directories(${voice_recognition_INCLUDE_DIRS}
                     ${Qt5Widgets_INCLUDE_DIRS}
                     ${Qt5Svg_INCLUDE_DIRS}
                     ${Qt5WebKitWidgets_INCLUDE_DIRS} 
@@ -37,7 +38,7 @@ include_directories(${voice_recognition_INCLUDE_DIRECTORIES}
 catkin_package(
     INCLUDE_DIRS include
     LIBRARIES ${PROJECT_NAME}
-    CATKIN_DEPENDS roscpp roslib gcs image_transport eigen_conversions lcar_msgs
+    CATKIN_DEPENDS roscpp roslib gcs vehicle
      )
 
 file(GLOB voice_recognition_SRCS src/myVoce/*.cpp src/qt/*.cpp)
@@ -61,31 +62,24 @@ add_library(${PROJECT_NAME}
             ${voice_recognition_VFS} )
 
 #add_executable(main src/main.cpp)
-add_executable(test_node nodes/uav_node.cpp )
-
+add_executable(test_node nodes/uav_node.cpp)
 
 #add_dependencies(main ${catkin_EXPORTED_TARGETS})
-add_dependencies(test_node ${catkin_EXPORTED_TARGETS})
-
+#add_dependencies(test_node ${catkin_EXPORTED_TARGETS})
+add_dependencies(${PROJECT_NAME} ${catkin_EXPORTED_TARGETS})
 #target_link_libraries(main
 #                        ${PROJECT_NAME}
 #                        Qt5::Widgets
 #                        ${catkin_LIBRARIES} 
 #/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/amd64/server/libjvm.so ) 
 
-
+target_link_libraries(${PROJECT_NAME} ${catkin_LIBRARIES})
 target_link_libraries(test_node
              ${PROJECT_NAME}
-             ${catkin_LIBRARIES}
+#             ${catkin_LIBRARIES}
              Qt5::Widgets
              Qt5::Svg
              Qt5::WebKitWidgets
-             ${OpenCV_LIBRARIES}
-/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/amd64/server/libjvm.so  
-#/home/borhan/Desktop/lcar-bot/devel/lib/libgcs.so
-)
-
-
-
- 
-#DEPENDS Qt5Widgets
+#             ${OpenCV_LIBRARIES}
+             /usr/lib/jvm/java-8-openjdk-amd64/jre/lib/amd64/server/libjvm.so  
+           )
