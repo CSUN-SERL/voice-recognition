@@ -29,6 +29,7 @@
 #include "myVoce/CommandParser.h"
 #include <unistd.h>
 #include <ros/package.h>
+#include "vehicle/uav_control.h"
 
 /// A sample application showing how to use Voce's speech synthesis 
 /// capabilities.

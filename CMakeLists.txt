@@ -4,9 +4,6 @@ cmake_minimum_required(VERSION 2.8.12)
 project(voice_recognition)
 
 find_package(Qt5Widgets REQUIRED)
-find_package(Qt5Svg REQUIRED)
-find_package(Qt5WebKitWidgets REQUIRED)
-#find_package(OpenCV REQUIRED)
 find_package(catkin REQUIRED COMPONENTS
                         roscpp
                         roslib
@@ -30,9 +27,6 @@ set(voice_recognition_INCLUDE_DIRS
 )
 
 include_directories(${voice_recognition_INCLUDE_DIRS}
-                    ${Qt5Widgets_INCLUDE_DIRS}
-                    ${Qt5Svg_INCLUDE_DIRS}
-                    ${Qt5WebKitWidgets_INCLUDE_DIRS} 
                     ${catkin_INCLUDE_DIRS} )
 
 catkin_package(
@@ -76,10 +70,6 @@ add_dependencies(${PROJECT_NAME} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(${PROJECT_NAME} ${catkin_LIBRARIES})
 target_link_libraries(test_node
              ${PROJECT_NAME}
-#             ${catkin_LIBRARIES}
              Qt5::Widgets
-             Qt5::Svg
-             Qt5::WebKitWidgets
-#             ${OpenCV_LIBRARIES}
              /usr/lib/jvm/java-8-openjdk-amd64/jre/lib/amd64/server/libjvm.so  
            )

@@ -19,7 +19,6 @@ UavAdapter::UavAdapter():
 uav(new gcs::UAVControl(2000)),
 timer(new QTimer(this))
 {
-    uav->SetPositionMode(gcs::PositionMode::local);
     
     gcs::UIAdapter *ui = gcs::UIAdapter::Instance();
     connect(ui, &gcs::UIAdapter::Arm, this,&UavAdapter::Arm);
@@ -27,7 +26,7 @@ timer(new QTimer(this))
     connect(ui, &gcs::UIAdapter::SetMode, this, &UavAdapter::SetMode);
     
     connect(timer, &QTimer::timeout, this, [=](){ uav->Run(); });
-    timer->start(0);
+    timer->start();
     
     this->Arm(2000, true);
     
@@ -44,7 +43,7 @@ void UavAdapter::run(){
 }
 
  void UavAdapter::Arm(int v_id, bool value)
- {
+ {    
      if(value)
      {
 //       uav->Takeoff(2);
@@ -59,7 +58,7 @@ void UavAdapter::run(){
         target_pt.radius = 2;
         uav->Arm(value);
         uav->Takeoff(2);
-        uav->ScoutBuilding(target_pt);
+//        uav->ScoutBuilding(target_pt);
         
        
      }
