@@ -8,6 +8,7 @@ find_package(catkin REQUIRED COMPONENTS
                         roscpp
                         roslib
                         gcs
+                        vehicle
 )
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
@@ -30,7 +31,8 @@ catkin_package(
     CATKIN_DEPENDS roscpp roslib gcs
     DEPENDS Qt5Widgets )
 
-file(GLOB voice_recognition_SRCS src/myVoce/*.cpp src/qt/*.cpp)
+#file(GLOB voice_recognition_SRCS src/myVoce/*.cpp src/qt/*.cpp)
+file(GLOB voice_recognition_SRCS src/myVoce/*.cpp src/*.cpp)
 #list(REMOVE_ITEM voice_recognition_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp )
 file(GLOB voice_recognition_HDRS include/qt/*.h)
 file(GLOB voice_recognition_UIS resources/*.ui)
@@ -58,7 +60,5 @@ target_link_libraries(${PROJECT_NAME}
                         _voice_recognition
                         Qt5::Widgets
                         ${catkin_LIBRARIES}
-
 /usr/lib/jvm/java-8-openjdk-amd64/jre/lib/amd64/server/libjvm.so
-
  )

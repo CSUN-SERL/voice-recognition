@@ -29,12 +29,20 @@
 #include "myVoce/CommandParser.h"
 #include <unistd.h>
 #include <ros/package.h>
+#include <QApplication>
+#include "qt/vrGUI.h"
+//#include "qt/UIAdapter.h"
 
 /// A sample application showing how to use Voce's speech synthesis 
 /// capabilities.
 
 int main(int argc, char **argv)
 {
+    QApplication app(argc, argv);
+    
+    gcs::vrGUI ui;
+    ui.show();
+    
     std::string path = ros::package::getPath("voice_recognition");
     path.append("/resources");
     std::cout << path << std::endl;
@@ -95,12 +103,12 @@ int main(int argc, char **argv)
 
                 std::cout << "You said ----------: " << s << std::endl;
             } 
-
             //voce::synthesize(s);
                         
         }//while (voce::getRecognizerQueueSize() > 0)
     }//while (!quit))
 
     voce::destroy();
-    return 0;
+    
+    return app.exec();
 }
