@@ -12,10 +12,7 @@
  */
 
 #include "qt/vrGUI.h"
-#include "qt/UIAdapter.h"
-#include <QLabel>
-#include <QString>
-#include <QHBoxLayout>
+#include <qt/ui_adapter.h>
 
 namespace gcs {
 

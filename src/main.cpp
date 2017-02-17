@@ -31,7 +31,6 @@
 #include <ros/package.h>
 #include <QApplication>
 #include "qt/vrGUI.h"
-//#include "qt/UIAdapter.h"
 
 /// A sample application showing how to use Voce's speech synthesis 
 /// capabilities.

@@ -13,7 +13,7 @@ find_package(catkin REQUIRED COMPONENTS
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-set(voice_recognition_INCLUDE_DIRECTORIES
+set(voice_recognition_INCLUDE_DIRS
         src
         include
         resources
@@ -21,7 +21,7 @@ set(voice_recognition_INCLUDE_DIRECTORIES
 	/usr/lib/jvm/java-8-openjdk-amd64/include/linux
 )
 
-include_directories(${voice_recognition_INCLUDE_DIRECTORIES}
+include_directories(${voice_recognition_INCLUDE_DIRS}
                     ${Qt5Widgets_INCLUDE_DIRS}
                     ${catkin_INCLUDE_DIRS} )
 
@@ -31,8 +31,7 @@ catkin_package(
     CATKIN_DEPENDS roscpp roslib gcs
     DEPENDS Qt5Widgets )
 
-#file(GLOB voice_recognition_SRCS src/myVoce/*.cpp src/qt/*.cpp)
-file(GLOB voice_recognition_SRCS src/myVoce/*.cpp src/*.cpp)
+file(GLOB voice_recognition_SRCS src/myVoce/*.cpp src/qt/*.cpp)
 #list(REMOVE_ITEM voice_recognition_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp )
 file(GLOB voice_recognition_HDRS include/qt/*.h)
 file(GLOB voice_recognition_UIS resources/*.ui)
@@ -46,18 +45,19 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 add_definitions(${Qt5Widgets_DEFINITIONS}
                 ${catkin_DEFINITIONS} )
 
-add_library(_voice_recognition
+add_library(${PROJECT_NAME}
             ${voice_recognition_SRCS}
             ${voice_recognition_MOCS}
             ${voice_recognition_UI_HDRS}
             ${voice_recognition_VFS} )
 
-add_executable(${PROJECT_NAME} src/main.cpp)
+add_executable(vr_node src/main.cpp)
 
 add_dependencies(${PROJECT_NAME} ${catkin_EXPORTED_TARGETS})
+add_dependencies(vr_node ${catkin_EXPORTED_TARGETS})
 
-target_link_libraries(${PROJECT_NAME}
-                        _voice_recognition
+target_link_libraries(vr_node
+                        ${PROJECT_NAME}
                         Qt5::Widgets
                         ${catkin_LIBRARIES}
 /usr/lib/jvm/java-8-openjdk-amd64/jre/lib/amd64/server/libjvm.so
