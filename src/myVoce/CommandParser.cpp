@@ -7,7 +7,7 @@
 #include <string>
 #include <qt/ui_adapter.h>
 
-#define ever ;;
+#define ever ;
 
 
 //int main(int argc, char **argv)
@@ -192,7 +192,10 @@ void CommandParser::initialize()
 	CMD["RESUME MISSION"] = &CommandParser::resumeMission;
 
 	//VC4
-
+        
+        CMD["RUN SEARCH PATTERN A"]= &CommandParser::searchPatternA;
+        CMD["RUN SEARCH PATTERN B"]= &CommandParser::searchPatternB;
+        CMD["RUN SEARCH PATTERN C"]= &CommandParser::searchPatternC;
 
 	//VC5
 	CMD["SET GROUP"] = &CommandParser::setGroup;
@@ -324,6 +327,18 @@ std::string CommandParser::disarm()
 }std::string CommandParser::rejectAllQueries()
 {
     std::string txt = "[REJECT ALL QUERIES]";
+    return txt;
+}std::string CommandParser::searchPatternA()
+{
+    std::string txt = "[RUN SEARCH PATTERN A ]";
+    return txt;
+}std::string CommandParser::searchPatternB()
+{
+    std::string txt = "[RUN SEARCH PATTERN B ]";
+    return txt;
+}std::string CommandParser::searchPatternC()
+{
+    std::string txt = "[RUN SEARCH PATTERN C ]";
     return txt;
 }
 

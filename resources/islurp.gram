@@ -5,7 +5,7 @@ grammar islurp;
 public <start> = (start | <statement> | end voice);
 <statement> = <vehicle> | <non-vehicle>;
 <digit> = ( zero | one | two | three | four | five | six | seven | eight | nine );
-
+<pattern> = ( A | B | C );
 
 <vehicle> = ( <UAV><VC> | <GROUP><VCG> |<HUSKY> (<VC4>) );
 <GROUP> = (group);
@@ -18,7 +18,7 @@ public <start> = (start | <statement> | end voice);
 <VC1> = ( /5/arm | /1/disarm | /9/get flight state);
 <VC2> = (set flight mode <fmode> | set altitude );
 <VC3> = (scout building <digit>[<digit>] | stop mission | pause mission | resume mission);
-<VC4> = (set way point <latlng>);
+<VC4> = (set way point <latlng> | run search pattern <pattern>);
 <VC5> = (set group | delete group);
 
 <fmode> = ( Stabilize | Loiter | Land | Altitude Hold | Position Hold | Return to Launch | Auto | Off board );

@@ -77,6 +77,10 @@ public:
 
 	std::string scoutBuilding();
         
+        std::string searchPatternA();
+        std::string searchPatternB();
+        std::string searchPatternC();
+        
         //Functions ENDS
 
         bool checkForDigit(const std::string &s);
