@@ -28,9 +28,10 @@
 #include <voce/voce.h>
 #include "myVoce/CommandParser.h"
 #include <unistd.h>
-#include <ros/package.h>
 #include <QApplication>
 #include "qt/vrGUI.h"
+#include <QThread>
+#include "qt/VR.h"
 
 /// A sample application showing how to use Voce's speech synthesis 
 /// capabilities.
@@ -39,9 +40,18 @@ int main(int argc, char **argv)
 {
     QApplication app(argc, argv);
     
+    QThread voceThread;
+    VR voceObj;
+    
+    voceObj.moveToThread(&voceThread);
+    QObject::connect(&voceThread, &QThread::started, &voceObj, &VR::Listen);
+    voceThread.start();
+    
     gcs::vrGUI ui;
     ui.show();
     
+    
+    /*
     std::string path = ros::package::getPath("voice_recognition");
     path.append("/resources");
     std::cout << path << std::endl;
@@ -108,6 +118,7 @@ int main(int argc, char **argv)
     }//while (!quit))
 
     voce::destroy();
+    */
     
     return app.exec();
 }

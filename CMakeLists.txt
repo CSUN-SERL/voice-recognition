@@ -49,7 +49,8 @@ add_library(${PROJECT_NAME}
             ${voice_recognition_SRCS}
             ${voice_recognition_MOCS}
             ${voice_recognition_UI_HDRS}
-            ${voice_recognition_VFS} )
+            ${voice_recognition_VFS}
+            ${voice_recognition_HDRS} )
 
 add_executable(vr_node src/main.cpp)
 
