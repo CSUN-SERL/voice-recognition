@@ -172,7 +172,7 @@ void CommandParser::initialize()
 	//VC1
 	CMD["ARM"] = &CommandParser::arm;
 	CMD["DISARM"] = &CommandParser::disarm;
-	CMD["GET FLIGHT STATE"] = &CommandParser::getFlightState;
+	CMD["GET FLIGHT STATE"] = &CommandParser::getFlightState; //
 
 	//VC2
 	CMD["SET FLIGHT MODE STABILIZE"] = &CommandParser::setFlightModeStabilize;
@@ -250,95 +250,118 @@ std::string CommandParser::disarm()
 }std::string CommandParser::getFlightState()
 {
     std::string txt = "[GET FLIGHT STATE]";
+    //Command not available to emit yet 
     return txt;
 }std::string CommandParser::setFlightModeStabilize()
 {
 
     std::string txt = "[SET FLIGHT MODE STABILIZE]";
+    emit gcs::UIAdapter::Instance()->SetMode(1,"STABILIZED");
     return txt;
 }std::string CommandParser::setFlightModeLoiter()
 {
     std::string txt = "[SET FLIGHT MODE LOITER]";
+    emit gcs::UIAdapter::Instance()->SetMode(1,"AUTO.LOITER");    
     return txt;
 }std::string CommandParser::setFlightModeLand()
 {
     std::string txt = "[SET FLIGHT MODE LAND]";
+    emit gcs::UIAdapter::Instance()->SetMode(1,"AUTO.LAND");
     return txt;
 }std::string CommandParser::setFlightModeAltitudeHold()
 {
     std::string txt = "[SET FLIGHT MODE ALTITUDE HOLD]";
+    emit gcs::UIAdapter::Instance()->SetMode(1,"ALTCTL");
     return txt;
 }std::string CommandParser::setFlightModePositionHold()
 {
     std::string txt = "[SET FLIGHT MODE POSITION HOLD]";
+    emit gcs::UIAdapter::Instance()->SetMode(1,"POSCTL");
     return txt;
 }std::string CommandParser::setFlightModeReturnToLaunch()
 {
     std::string txt = "[SET FLIGHT MODE RETURN TO LAUNCH]";
+    //Command not available to emit yet
     return txt;
 }std::string CommandParser::setFlightModeAuto()
 {
     std::string txt = "[SET FLIGHT MODE AUTO]";
+    emit gcs::UIAdapter::Instance()->SetMode(1,"AUTO");
     return txt;
 }std::string CommandParser::setFlightModeOffBoard()
 {
     std::string txt = "[SET FLIGHT MODE OFF BOARD]";
+    emit gcs::UIAdapter::Instance()->SetMode(1,"OFFBOARD");
     return txt;
 }std::string CommandParser::setAltitude()
 {
     std::string txt = "[SET ALTITUDE]";
+    //Command not available to emit yet
     return txt;
 }std::string CommandParser::stopMission()
 {
     std::string txt = "[STOP MISSION]";
+    emit gcs::UIAdapter::Instance()->CancelMission(1);
     return txt;
 }std::string CommandParser::pauseMission()
 {
     std::string txt = "[PAUSE MISSION]";
+    emit gcs::UIAdapter::Instance()->PauseMission(1);
     return txt;
 }std::string CommandParser::resumeMission()
 {
     std::string txt = "[RESUME MISSION]";
+    emit gcs::UIAdapter::Instance()->ResumeMission(1);
     return txt;
 }std::string CommandParser::setGroup()
 {
     std::string txt = "[SET GROUP]";
+    //Command not available to emit yet
     return txt;
 }std::string CommandParser::deleteGroup()
 {
     std::string txt = "[DELETE GROUP]";
+    //Command not available to emit yet
     return txt;
 }std::string CommandParser::stopPlay()
 {
     std::string txt = "[STOP PLAY]";
+    emit gcs::UIAdapter::Instance()->CancelPlay();
     return txt;
 }std::string CommandParser::resumePlay()
 {
     std::string txt = "[RESUME PLAY]";
+    emit gcs::UIAdapter::Instance()->ResumePlay();
     return txt;
 }std::string CommandParser::pausePlay()
 {
     std::string txt = "[PAUSE PLAY]";
+    emit gcs::UIAdapter::Instance()->PausePlay();
     return txt;
 }std::string CommandParser::acceptAllQueries()
 {
     std::string txt = "[ACCEPT ALL QUERIES]";
+    //Command not available to emit yet
     return txt;
 }std::string CommandParser::rejectAllQueries()
 {
     std::string txt = "[REJECT ALL QUERIES]";
+    //Command not available to emit yet
     return txt;
 }std::string CommandParser::searchPatternA()
 {
     std::string txt = "[RUN SEARCH PATTERN A ]";
+    //Command not available to emit yet
     return txt;
 }std::string CommandParser::searchPatternB()
 {
     std::string txt = "[RUN SEARCH PATTERN B ]";
+    //Command not available to emit yet
     return txt;
 }std::string CommandParser::searchPatternC()
 {
     std::string txt = "[RUN SEARCH PATTERN C ]";
+    //Command not available to emit yet
     return txt;
 }
 
@@ -347,6 +370,7 @@ std::string CommandParser::rejectQuery()
 {
    // TODO Auto-generated method stub
         std::string txt = "[REJECT QUERY FOR " + boost::lexical_cast<std::string>(arg1) + " ]";
+        //Command not available to emit yet
 	return txt;
 }
 
@@ -355,6 +379,7 @@ std::string CommandParser::acceptQuery()
 // TODO Auto-generated method stub
 
 	std::string txt = "[ACCEPT QUERY FOR " + boost::lexical_cast<std::string>(arg1) + " ]";
+        //Command not available to emit yet
 	 return txt;
 }
 
@@ -362,6 +387,7 @@ std::string CommandParser::executePlay()
 {
 // TODO Auto-generated method stub
 	std::string txt = "[EXECUTE PLAY FOR " + boost::lexical_cast<std::string>(arg1) +" ]";
+         emit gcs::UIAdapter::Instance()->ExecutePlay(arg1);
 	 return txt;
 }
 
@@ -369,6 +395,7 @@ std::string CommandParser::deleteAccessPoint()
 {
 // TODO Auto-generated method stub
 	std::string txt = "[DELETE ACCESS POINT FOR " + boost::lexical_cast<std::string>(arg1) + " ]";
+        //Command not available to emit yet
 	 return txt;
 }
 
@@ -376,10 +403,9 @@ std::string CommandParser::setWayPoint()
 {
 // TODO Auto-generated method stub
 
-    std::string txt = "[SET WAY POINT FOR LAT: " + boost::lexical_cast<std::string>(arg1) + " AND LNG: " + boost::lexical_cast<std::string>(arg2) + " ]";
-    emit gcs::UIAdapter::Instance()->SetWayPoint(1,arg1,arg2,0);
-
-    return txt;
+        std::string txt = "[SET WAY POINT FOR LAT: " + boost::lexical_cast<std::string>(arg1) + " AND LNG: " + boost::lexical_cast<std::string>(arg2) + " ]";
+        emit gcs::UIAdapter::Instance()->SetWayPoint(1,arg1,arg2,0);
+        return txt;
 }
 
 std::string CommandParser::scoutBuilding()
@@ -387,7 +413,8 @@ std::string CommandParser::scoutBuilding()
 // TODO Auto-generated method stub
 
 	std::string txt = "[SCOUT BUILDING FOR " + boost::lexical_cast<std::string>(arg1) + " ]";
-    return txt;
+        emit gcs::UIAdapter::Instance()->ScoutBuilding(1,arg1);
+        return txt;
 }
 
 bool CommandParser::checkForDigit(const std::string &s)
@@ -402,6 +429,7 @@ bool CommandParser::checkForDigit(const std::string &s)
     return true;
 }
 
+//Converts string into an Array of strings and letter digits into one number
 void CommandParser::convertCmd(const std::string& input)
 {
 
