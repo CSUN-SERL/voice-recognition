@@ -15,7 +15,7 @@
 #define UAVADAPTER_H
 #include <QObject>
 #include <QTimer>
-#include <qt/ui_adapter.h>
+
 #include <vehicle/uav_control.h>
 
 class UavAdapter:public QObject {

@@ -13,6 +13,8 @@
 
 #include <qt/UavAdapter.h>
 #include <vehicle/data_types.h>
+#include <gcs/qt/ui_adapter.h>
+#include <lcar_msgs/TargetLocal.h>
 
 
 UavAdapter::UavAdapter():
@@ -57,7 +59,7 @@ void UavAdapter::run(){
 
         target_pt.radius = 2;
         uav->Arm(value);
-        uav->Takeoff(2);
+        uav->SetTarget(target_pt.target);
 //        uav->ScoutBuilding(target_pt);
         
        
@@ -71,7 +73,8 @@ void UavAdapter::run(){
  }
 
   void UavAdapter::SetWayPoint(int v_id, int lat, int lng, int alt){
-      uav->SetPosition(lat,lng,10,0);
+      alt = 10;
+      uav->SetTarget(lat,lng,alt);
   }
 
   void UavAdapter::SetMode(int v_id, QString mode){

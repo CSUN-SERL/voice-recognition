@@ -5,9 +5,9 @@
 #include <unistd.h>
 #include <iostream>
 #include <string>
-#include <qt/ui_adapter.h>
+#include <gcs/qt/ui_adapter.h>
 
-#define ever ;
+#define ever ;;
 
 
 //int main(int argc, char **argv)
