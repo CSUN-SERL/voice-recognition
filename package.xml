@@ -26,5 +26,4 @@
     <run_depend>vehicle</run_depend>
     <run_depend>lcar_msgs</run_depend>
 
-
 </package>

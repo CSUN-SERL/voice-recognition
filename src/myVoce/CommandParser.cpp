@@ -168,6 +168,8 @@ void CommandParser::initialize()
 
 	//functions starting with SET
 
+        //custom
+        CMD["MAIN SCREEN ON"] = &CommandParser::mainScreen;
 
 	//VC1
 	CMD["ARM"] = &CommandParser::arm;
@@ -237,7 +239,7 @@ void CommandParser::initialize()
 
 std::string CommandParser::arm()
 {
-    std::string txt = "[ARM]";
+    std::string txt = "[ARM@]";
     emit gcs::UIAdapter::Instance()->Arm(1,true);
     return txt;
 }
@@ -414,6 +416,14 @@ std::string CommandParser::scoutBuilding()
 
 	std::string txt = "[SCOUT BUILDING FOR " + boost::lexical_cast<std::string>(arg1) + " ]";
         emit gcs::UIAdapter::Instance()->ScoutBuilding(1,arg1);
+        return txt;
+}
+
+std::string CommandParser::mainScreen()
+{
+// TODO Auto-generated method stub
+
+	std::string txt = "[Main Screen On]";
         return txt;
 }
 

@@ -53,7 +53,7 @@ void VoiceRecognition::run()
         while (voce::getRecognizerQueueSize() > 0)
         {
             std::string s = voce::popRecognizedString();
-
+            
             // Check if the string contains 'quit'.
             if (std::string::npos != s.rfind("quit"))
             {

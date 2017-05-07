@@ -3,10 +3,11 @@
 grammar islurp;
 
 public <start> = (start | <statement> | end voice);
-<statement> = <vehicle> | <non-vehicle>;
+<statement> = <vehicle> | <non-vehicle> | <custom>;
 <digit> = ( zero | one | two | three | four | five | six | seven | eight | nine );
 <pattern> = ( A | B | C );
 
+<custom> = (main screen on);
 <vehicle> = ( <UAV><VC> | <GROUP><VCG> |<HUSKY> (<VC4>) );
 <GROUP> = (group);
 <UAV> = (( drone ) <digit> [<digit>] )*;

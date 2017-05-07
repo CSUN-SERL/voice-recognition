@@ -56,13 +56,13 @@ int main(int argc, char **argv)
         // here.  For this sample, we'll just sleep for a little bit.
 
         usleep(200);
-
+  
         while (voce::getRecognizerQueueSize() > 0)
         {
                     
             std::string s = voce::popRecognizedString();
-                        
-                        
+            
+
             // Check if the string contains 'quit'.
             if (std::string::npos != s.rfind("quit"))
             {
@@ -77,7 +77,7 @@ int main(int argc, char **argv)
                 break;
                 
             }
-            else if (s == "start voice")
+            else if (s == "start")
             {
                 std::cout << "Voice Recognition started!"<< std::endl;
                 started = true;

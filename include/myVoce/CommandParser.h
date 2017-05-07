@@ -80,7 +80,8 @@ public:
         std::string searchPatternA();
         std::string searchPatternB();
         std::string searchPatternC();
-        
+        std::string mainScreen();
+
         //Functions ENDS
 
         bool checkForDigit(const std::string &s);
