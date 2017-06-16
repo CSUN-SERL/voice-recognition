@@ -1,5 +1,5 @@
 
-#include <voice_recognition/CommandParser.h>
+#include <myVoce/CommandParser.h>
 #include <boost/algorithm/string.hpp>
 #include <boost/lexical_cast.hpp>
 #include <unistd.h>

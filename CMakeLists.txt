@@ -3,15 +3,15 @@ cmake_minimum_required(VERSION 2.8.12)
 
 project(voice_recognition)
 
-find_package(Qt5Widgets REQUIRED)
+set( CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/CMake_Modules;${CMAKE_MODULE_PATH}")
+
 find_package(catkin REQUIRED COMPONENTS
                         roscpp
                         roslib
-                        eigen_conversions
-                        image_transport
-                        cv_bridge
-                        lcar_msgs
 )
+
+find_package(jvm REQUIRED)
+
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -20,41 +20,32 @@ set(voice_recognition_INCLUDE_DIRS
         include
         resources
         nodes
-	/usr/lib/jvm/java-6-openjdk-amd64/include
-	/usr/lib/jvm/java-6-openjdk-amd64/include/linux
 )
 
 include_directories(${voice_recognition_INCLUDE_DIRS}
-                    ${catkin_INCLUDE_DIRS} )
+                    ${catkin_INCLUDE_DIRS}
+                    ${JVM_INCLUDE_DIRS} )
 
 catkin_package(
     INCLUDE_DIRS include
-    LIBRARIES ${PROJECT_NAME}
-    CATKIN_DEPENDS roscpp roslib lcar_msgs
+    CATKIN_DEPENDS roscpp roslib
      )
 
-file(GLOB voice_recognition_SRCS src/*.cpp)
-list(REMOVE_ITEM voice_recognition_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/src/qt/UAVAdapter.cpp )
-file(GLOB voice_recognition_HDRS include/voice-recognition/*.h)
+
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+add_definitions( ${catkin_DEFINITIONS} )
 
 
-qt5_wrap_cpp(voice_recognition_MOCS ${voice_recognition_HDRS}) #makes meta objects compile file
+add_executable( ${PROJECT_NAME}_node 
+                nodes/voice_recognition_node.cpp
+                src/VoiceRecognition.cpp
+                include/voice_recognition/VoiceRecognition.h)
 
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -fPIC")
-add_definitions(${Qt5Widgets_DEFINITIONS}
-                ${catkin_DEFINITIONS} )
-
-add_library(${PROJECT_NAME}
-            ${voice_recognition_SRCS}
-            ${voice_recognition_MOCS}
-            ${voice_recognition_HDRS}
-            )
+add_dependencies(${PROJECT_NAME}_node ${catkin_EXPORTED_TARGETS})
 
 
-add_dependencies(${PROJECT_NAME} ${catkin_EXPORTED_TARGETS})
-
-target_link_libraries(${PROJECT_NAME}
-                        Qt5::Widgets
+target_link_libraries(${PROJECT_NAME}_node
                         ${catkin_LIBRARIES}
-/usr/lib/jvm/java-6-openjdk-amd64/jre/lib/amd64/server/libjvm.so )
+                        ${JVM_LIBRARY})
+

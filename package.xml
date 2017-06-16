@@ -2,11 +2,11 @@
 <package>
 
     <name>voice_recognition</name>
-    <version>0.0.0</version>
+    <version>0.0.1</version>
     <description>
-        bare bones ros package with a QMainWindow that does not rely on rqt.
+        Ros Package containing sub-node with VOCE
     </description>
-    <maintainer email="net2net4all@gmail.com">VR Team</maintainer>
+    <maintainer email="daniel.benusovich.727@my.csun.edu">Cool Kids</maintainer>
     <license>BSD</license>
 
     <url>http://ros.org/wiki/foo_core</url>
@@ -16,11 +16,12 @@
 
     <build_depend>roscpp</build_depend>
     <build_depend>roslib</build_depend>
-    <build_depend>lcar_msgs</build_depend>
+    <build_depend>jvm</build_depend>
 
     <run_depend>roscpp</run_depend>
     <run_depend>roslib</run_depend>
-    <run_depend>lcar_msgs</run_depend>
+    <run_depend>jvm</run_depend>
+   
 
 
 </package>

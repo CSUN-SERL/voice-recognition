@@ -14,23 +14,15 @@
 #ifndef VOICERECOGNITION_H
 #define VOICERECOGNITION_H
 
-#include <QObject>
-#include <QTimer>
 #include <ros/package.h>
 
-class VoiceRecognition : public QObject {
-    Q_OBJECT
-    public:
+class VoiceRecognition 
+{
+public:
     VoiceRecognition();
     virtual ~VoiceRecognition();
-    
-public slots:
-        void run();
-        
-private:
-    bool quit = false;
-    bool started = false;
-    QTimer * timer;
+    void run();
+
 };
 
 #endif /* VOICERECOGNITION_H */
